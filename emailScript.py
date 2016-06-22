@@ -21,5 +21,5 @@ def sendMail(sender, userPass, toaddr):
 
 sendees = ["devlin.brennan@optum.com", "tien.bui@optum.com"]
 for sendee in sendees:
-    sendMail("devlin.brennan@optum.com", "devBrenn49", sendee)
+    sendMail("devlin.brennan@optum.com", "", sendee)
 
