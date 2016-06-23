@@ -11,10 +11,9 @@ def compareDates(threeMonths, lastLogIn):
 
 def validateDate(date):
     tmpDate = date
-    tmpDate.split("/")
-    month = tmpDate[0]
-    day = tmpDate[1]
-    year = tmpDate[2]
+    month = int(tmpDate[:2])
+    day = int(tmpDate[3:5])
+    year = int(tmpDate[6:10])
     try:
         datetime.datetime(month = month, day = day, year = year)
     except ValueError:
@@ -30,7 +29,7 @@ def checkDateFormat(date):
 
 def getDateFromFile(file):
     #get date from user
-    dateToCompare = input("Please enter the date from three months ago: ")
+    dateToCompare = input("Please enter the date from three months ago zero buffered: ")
 
     #open and read data from .csv file
     fd = open(file)
@@ -40,10 +39,15 @@ def getDateFromFile(file):
     validateDate(dateToCompare)
 
     for row in data:
-        lastLogIn = time.strftime(row[2], "%m/%d/%Y")
+        print(row[2])
+        lastLogIn = time.strftime(row[2], "%m/%e/%Y")
         checkDateFormat((lastLogIn))
         validateDate(dateToCompare)
 
         if(compareDates(dateToCompare, lastLogIn)):
-            mailList.append(row[1])
+            mailList.append(str(row[1]))
 
+    for i in mailList:
+        print(i)
+
+getDateFromFile("test.csv")
