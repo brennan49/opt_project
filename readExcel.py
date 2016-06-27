@@ -46,9 +46,9 @@ def getDateFromFile(file):
        must be 3 months or more ago from the current date"""
     for row in data:
         lastLogIn = row[2]
-        #validateDate(lastLogIn)
+        validateDate(lastLogIn)
         #checkDateFormat((lastLogIn))
-        lastLogIn = time.strftime(row[2], "%m/%d/%Y")
+        #lastLogIn = time.strftime(row[2], "%m/%d/%Y")
         logInDate = lastLogIn.split("/")
         threeMonths = dateToCompare.split("/")
         if(int(logInDate[2]) >= int(threeMonths[2])):
