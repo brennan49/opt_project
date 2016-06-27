@@ -2,6 +2,8 @@ import csv
 import time
 import datetime
 
+lasLogIn = ''
+dateToCompare = ''
 #Note: date must be in the format of month/day/year
 def compareDates(threeMonths, lastLogIn):
     if(lastLogIn <= threeMonths):
@@ -11,6 +13,10 @@ def compareDates(threeMonths, lastLogIn):
 
 def validateDate(date):
     tmpDate = date
+    if(tmpDate[1] == "/"):
+        tmpDate = "0" + tmpDate
+    if(tmpDate[5] != "/"):
+        tmpDate = tmpDate[:3] + "0" + tmpDate[3:9]
     month = int(tmpDate[:2])
     day = int(tmpDate[3:5])
     year = int(tmpDate[6:10])
@@ -27,6 +33,8 @@ def checkDateFormat(date):
     except ValueError:
         raise ValueError("Incorrect data format, should be MM/DD/YYYY.")
 
+'''after being fed a file, read the data and create a mail list based on people's last
+   log in date if 3 month or longer from the current date.'''
 def getDateFromFile(file):
     #get date from user
     dateToCompare = input("Please enter the date from three months ago zero buffered: ")
@@ -35,17 +43,27 @@ def getDateFromFile(file):
     fd = open(file)
     data = csv.reader(fd)
     mailList = []
-    checkDateFormat(dateToCompare)
+    #checkDateFormat(dateToCompare)
     validateDate(dateToCompare)
 
+    #iterate through the rows of data comparing dates
+    """criteria to add to mail list are that the date of last log in
+       must be 3 months or more ago from the current date"""
     for row in data:
-        print(row[2])
-        lastLogIn = time.strftime(row[2], "%m/%e/%Y")
-        checkDateFormat((lastLogIn))
-        validateDate(dateToCompare)
-
-        if(compareDates(dateToCompare, lastLogIn)):
-            mailList.append(str(row[1]))
+        lastLogIn = row[2]
+        validateDate(lastLogIn)
+        #checkDateFormat((lastLogIn))
+        #lastLogIn = time.strftime(row[2], "%m/%d/%Y")
+        logInDate = lastLogIn.split("/")
+        threeMonths = dateToCompare.split("/")
+        if(int(logInDate[2]) >= int(threeMonths[2])):
+            if((int(threeMonths[0])) > int(logInDate[0])):
+                mailList.append(row[1] + ", " + row[2])
+            elif((int(threeMonths[0])) == int(logInDate[0])):
+                if(int(threeMonths[1]) >= int(logInDate[1])):
+                    mailList.append(row[1] + ", " + row[2])
+        else:
+            mailList.append(row[1] + ", " + row[2])
 
     for i in mailList:
         print(i)
