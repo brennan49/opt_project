@@ -1,6 +1,7 @@
 import csv
 import time
 import datetime
+import sys
 
 lasLogIn = ''
 dateToCompare = ''
@@ -38,7 +39,7 @@ def checkDateFormat(date):
 def getDateFromFile(file):
     #get date from user
     dateToCompare = input("Please enter the date from three months ago zero buffered: ")
-
+    mailFile = input("Please give a file name for the mail list that will be created: ")
     #open and read data from .csv file
     fd = open(file)
     data = csv.reader(fd)
@@ -64,8 +65,11 @@ def getDateFromFile(file):
                     mailList.append(row[1] + ", " + row[2])
         else:
             mailList.append(row[1] + ", " + row[2])
-
-    for i in mailList:
-        print(i)
+    fd.close()
+    fd = open(mailFile, "w")
+    sys.stdout = fd
+    for item in mailList:
+        print(item)
+    fd.close()
 
 getDateFromFile("test.csv")
