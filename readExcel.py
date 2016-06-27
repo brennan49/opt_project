@@ -5,12 +5,6 @@ import sys
 
 lasLogIn = ''
 dateToCompare = ''
-#Note: date must be in the format of month/day/year
-def compareDates(threeMonths, lastLogIn):
-    if(lastLogIn <= threeMonths):
-        return True
-    else:
-        return False
 
 def validateDate(date):
     tmpDate = date
@@ -52,9 +46,9 @@ def getDateFromFile(file):
        must be 3 months or more ago from the current date"""
     for row in data:
         lastLogIn = row[2]
-        validateDate(lastLogIn)
+        #validateDate(lastLogIn)
         #checkDateFormat((lastLogIn))
-        #lastLogIn = time.strftime(row[2], "%m/%d/%Y")
+        lastLogIn = time.strftime(row[2], "%m/%d/%Y")
         logInDate = lastLogIn.split("/")
         threeMonths = dateToCompare.split("/")
         if(int(logInDate[2]) >= int(threeMonths[2])):
@@ -72,4 +66,8 @@ def getDateFromFile(file):
         print(item)
     fd.close()
 
-getDateFromFile("test.csv")
+def read_excel():
+    file = input("Please enter an existing filename to read from: ")
+    getDateFromFile(file)
+
+read_excel()
