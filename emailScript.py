@@ -12,7 +12,7 @@ def sendMail(sender, userPass, toaddr):
     body = "This is an automated test message to multiple parties"
     msg.attach(MIMEText(body, 'plain'))
     #what are these values below for optum's servers?
-    server = smtplib.SMTP('casx10.uhc.com', 587)
+    server = smtplib.SMTP(host, port)
     server.starttls()
     server.login(sender, userPass)
     text = msg.as_string()
