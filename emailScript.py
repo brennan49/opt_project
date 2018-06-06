@@ -19,7 +19,7 @@ def sendMail(sender, userPass, toaddr):
     server.sendmail(sender, toaddr, text)
     server.quit()
 
-sendees = ["devlin.brennan@optum.com", "tien.bui@optum.com"]
+sendees = ["devlin.brennan@example.com", "tien.bui@example.com"]
 for sendee in sendees:
-    sendMail("devlin.brennan@optum.com", "", sendee)
+    sendMail("devlin.brennan@example.com", "", sendee)
 
